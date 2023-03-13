@@ -27,7 +27,7 @@ namespace DSG.Model.Models
         [ForeignKey("RoleId")]
         public AppRole AppRole { get; set; }
 
-        //[ForeignKey("FunctionId")]
-        //public Function Function { get; set; }
+        [ForeignKey("FunctionId")]
+        public Function Function { get; set; }
     }
 }
