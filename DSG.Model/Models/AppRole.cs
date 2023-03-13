@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DSG.Model.Model
+namespace DSG.Model.Models
 {
     [Table("AppRoles")]
     public class AppRole : IdentityRole

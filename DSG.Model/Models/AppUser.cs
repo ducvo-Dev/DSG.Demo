@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
-namespace DSG.Model.Model
+namespace DSG.Model.Models
 {
     [Table("AppUsers")]
     public class AppUser : IdentityUser

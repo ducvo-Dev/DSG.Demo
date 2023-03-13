@@ -57,13 +57,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\AppRole.cs" />
-    <Compile Include="Model\AppUser.cs" />
+    <Compile Include="Abstract\Auditable.cs" />
+    <Compile Include="Models\AppRole.cs" />
+    <Compile Include="Models\AppUser.cs" />
+    <Compile Include="Models\Error.cs" />
+    <Compile Include="Models\Function.cs" />
+    <Compile Include="Models\Permission.cs" />
+    <Compile Include="Models\Product.cs" />
+    <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Abstract\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
