@@ -113,6 +113,8 @@
                         IncludedVAT = c.Boolean(nullable: false),
                         Description = c.String(maxLength: 500),
                         Content = c.String(),
+                        HotFlag = c.Boolean(),
+                        ViewCount = c.Int(),
                         Tags = c.String(),
                         CreatedDate = c.DateTime(),
                         CreatedBy = c.String(maxLength: 256),

@@ -58,11 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Abstract\Auditable.cs" />
+    <Compile Include="Models\ApplicationGroup.cs" />
+    <Compile Include="Models\ApplicationRoleGroup.cs" />
+    <Compile Include="Models\ApplicationUserGroup.cs" />
     <Compile Include="Models\AppRole.cs" />
     <Compile Include="Models\AppUser.cs" />
     <Compile Include="Models\Error.cs" />
-    <Compile Include="Models\Function.cs" />
-    <Compile Include="Models\Permission.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductCategory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

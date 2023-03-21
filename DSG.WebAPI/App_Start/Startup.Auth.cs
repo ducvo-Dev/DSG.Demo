@@ -1,11 +1,20 @@
-﻿using System;
-using Microsoft.AspNet.Identity;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
+using Microsoft.Owin.Security.OAuth;
 using Owin;
-using DSG.WebAPI.Models;
+using System;
+using System.Linq;
+using System.Security.Claims;
+using System.Threading.Tasks;
+using DSG.Common;
+using DSG.Data;
+using DSG.Model.Models;
+using DSG.Service;
+using DSG.WebAPI.Infrastructure;
 
 namespace DSG.WebAPI
 {
@@ -15,26 +24,37 @@ namespace DSG.WebAPI
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context, user manager and signin manager to use a single instance per request
-            app.CreatePerOwinContext(ApplicationDbContext.Create);
+            app.CreatePerOwinContext(DsgDbContext.Create);
+
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
             app.CreatePerOwinContext<ApplicationSignInManager>(ApplicationSignInManager.Create);
+            app.CreatePerOwinContext<UserManager<AppUser>>(CreateManager);
 
-            // Enable the application to use a cookie to store information for the signed in user
-            // and to use a cookie to temporarily store information about a user logging in with a third party login provider
+            app.UseOAuthAuthorizationServer(new OAuthAuthorizationServerOptions
+            {
+                TokenEndpointPath = new PathString("/oauth/token"),
+                Provider = new AuthorizationServerProvider(),
+                AccessTokenExpireTimeSpan = TimeSpan.FromMinutes(30),
+                AllowInsecureHttp = true,
+
+            });
+            app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
+
             // Configure the sign in cookie
             app.UseCookieAuthentication(new CookieAuthenticationOptions
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                LogoutPath = new PathString("/Account/Logout"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
                     // This is a security feature which is used when you change a password or add an external login to your account.  
-                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, ApplicationUser>(
+                    OnValidateIdentity = SecurityStampValidator.OnValidateIdentity<ApplicationUserManager, AppUser>(
                         validateInterval: TimeSpan.FromMinutes(30),
-                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager))
+                        regenerateIdentity: (manager, user) => user.GenerateUserIdentityAsync(manager, DefaultAuthenticationTypes.ApplicationCookie))
                 }
-            });            
+            });
             app.UseExternalSignInCookie(DefaultAuthenticationTypes.ExternalCookie);
 
             // Enables the application to temporarily store user information when they are verifying the second factor in the two-factor authentication process.
@@ -63,6 +83,67 @@ namespace DSG.WebAPI
             //    ClientId = "",
             //    ClientSecret = ""
             //});
+
+        }
+
+        public class AuthorizationServerProvider : OAuthAuthorizationServerProvider
+        {
+            public override async Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
+            {
+                 context.Validated();
+            }
+    
+                public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
+                {
+                    var allowedOrigin = context.OwinContext.Get<string>("as:clientAllowedOrigin");
+
+                    if (allowedOrigin == null) allowedOrigin = "*";
+
+                    context.OwinContext.Response.Headers.Add("Access-Control-Allow-Origin", new[] { allowedOrigin });
+
+                    UserManager<AppUser> userManager = context.OwinContext.GetUserManager<UserManager<AppUser>>();
+                    AppUser user;
+                    try
+                    {
+                        user = await userManager.FindAsync(context.UserName, context.Password);
+                    }
+                    catch
+                    {
+                        // Could not retrieve the user due to error.
+                        context.SetError("server_error");
+                        context.Rejected();
+                        return;
+                    }
+                    if (user != null)
+                    {
+                        var applicationGroupService = ServiceFactory.Get<IApplicationGroupService>();
+                        var listGroup = applicationGroupService.GetListGroupByUserId(user.Id);
+                        if (listGroup.Any(x => x.Name == CommonConstants.Administrator))
+                        {
+                            ClaimsIdentity identity = await userManager.CreateIdentityAsync(
+                                           user,
+                                           DefaultAuthenticationTypes.ExternalBearer);
+                            context.Validated(identity);
+                        }
+                        else
+                        {
+                            context.Rejected();
+                            context.SetError("invalid_group", "Bạn không phải là admin");
+                        }
+
+                    }
+                    else
+                    {
+                        context.SetError("invalid_grant", "Tài khoản hoặc mật khẩu không đúng.'");
+                        context.Rejected();
+                    }
+                }
+            }
+            private static UserManager<AppUser> CreateManager(IdentityFactoryOptions<UserManager<AppUser>> options, IOwinContext context)
+        {
+            var userStore = new UserStore<AppUser>(context.Get<DsgDbContext>());
+            var owinManager = new UserManager<AppUser>(userStore);
+            return owinManager;
         }
     }
 }

@@ -1,0 +1,44 @@
+﻿.sildeshow {
+    width: 100%;
+    height: auto;
+}
+
+a {
+    position: relative;
+}
+
+.col {
+    float: left;
+}
+
+.list-menu {
+    text-decoration: none;
+    list-style-type: none;
+    color: white;
+}
+
+span {
+    color: white;
+}
+
+a:link {
+    color: white;
+}
+
+footer {
+    background: #80bb45;
+}
+
+nav {
+    background: #80bb35;
+}
+
+#topbar1 {
+    background: #80bb35;
+}
+.list-main {
+    list-style-type: none;
+}
+#loaisanpham div {
+    display: block;
+}
