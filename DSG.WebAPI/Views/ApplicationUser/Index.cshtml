@@ -1,0 +1,182 @@
+﻿@model IEnumerable<DSG.WebAPI.Models.ApplicationUserViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="card content">
+    <div class="card-header container-fluid">
+        <div class="row">
+            <div class="col-md-6 text-danger text-uppercase">
+                <strong> DANH SÁCH NGƯỜI DÙNG</strong>
+            </div>
+            <div class="col-md-6 text-right ">
+                <a class="btn btn-sm btn-success" href="@Url.Action("Create","ApplicationUser")"><i class="fas fa-plus"></i>Thêm</a>
+            </div>
+        </div>
+
+    </div>
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="card-body container-fluid">
+        <div class="card-header">
+            Search
+            <input type="text" name="txtSearch" placeholder="Search!" class="txtSearch" />
+            <button type="button" class="btn btn-warning" id="search">Search</button>
+        </div>
+
+        <table class="table table-bordered table-striped table-responsive-xl">
+            <tr>
+                <th>
+                    <input type="checkbox" name="checkALL" />
+                </th>
+                <th>Tên Người Dùng</th>
+                <th>Ngày Sinh</th>
+                <th>Giới Tính</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>UserName</th>
+                <th>PhoneNumber</th>
+                <th>Chức năng</th>
+                <th>ID</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkALL" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UserName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhoneNumber)
+                    </td>
+
+                    <td>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("Details","ApplicationUser",new { id=item.Id})">
+                            <i class="fas fa-info"></i>
+                        </a>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("Update","ApplicationUser",new { id=item.Id})">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","ApplicationUser",new { id=item.Id})">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Id)
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="card-footer">
+            <nav aria-label="Page navigation example">
+                @*<div class="pagination" style="margin-left: 400px">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>*@
+            </nav>
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <script type="text/javascript">
+    @*$(document).ready(function () {*@
+
+    @*//function load pagination
+        var load = function (txtSearch, page) {
+        $.ajax({
+        url: '@Url.Action("getAllPost", "Application")',
+        type: "GET",
+        data: { txtSearch:txtSearch , page: page  },
+        dataType: 'json',
+        contentType: 'application/json;charset=utf-8',
+        success: function (result) {
+        console.log(result);
+        //create pagination
+        var pagination_string = "";
+        var pageCurrent = result.pageCurrent;
+        var numSize = result.numSize;
+
+        //create button previous
+        if (pageCurrent > 1) {
+        var pagePrevious = pageCurrent - 1;
+        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + pagePrevious + '>Previous</a></li>';
+        }
+
+        for (i = 1; i <= numSize; i++){
+        if (i == pageCurrent) {
+        pagination_string += '<li class="page-item active"><a href="" class="page-link" data-page=' + i + '>'+pageCurrent+'</a></li>';
+        } else {
+        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + i + '>'+i+'</a></li>';
+        }
+        }
+
+        //create button next
+        if (pageCurrent > 0 && pageCurrent < numSize) {
+        var pageNext = pageCurrent + 1;
+        pagination_string += '<li class="page-item"><a href="" class="page-link" data-page=' + pageNext + '>Next</a></li>';
+        }
+
+        //load pagination
+        $("#load-pagination").html(pagination_string);
+        });
+
+        //load str to class="load-list"
+        $(".load-list").html(str);
+        }
+        });
+        }
+
+        //click event pagination
+        $("body").on("click",".pagination li a",function (event) {
+        event.preventDefault();
+        var page = $(this).attr('data-page');
+
+        //load event pagination
+        var txtSearch = $(".txtSearch").val();
+        if (txtSearch != "") {
+        load(txtSearch, page)
+        }
+        else {
+        load(null, page);
+        }
+
+        });
+
+        //click event search
+        $("#search").click(function () {
+        var txtSearch = $(".txtSearch").val();
+        if (txtSearch != "") {
+        load(txtSearch, 1)
+        }
+        else {
+        load(null, 1);
+        }
+
+        });
+
+        //load init
+        load(null, 1);
+        });*@
+
+        @Scripts.Render("~/bundles/jqueryval")
+        </script>
+}
+

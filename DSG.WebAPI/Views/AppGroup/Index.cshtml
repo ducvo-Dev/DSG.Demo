@@ -1,0 +1,72 @@
+﻿@model IEnumerable<DSG.WebAPI.Models.ApplicationGroupViewModel>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card content">
+    <div class="card-header container-fluid">
+        <div class="row">
+            <div class="col-md-6 text-danger text-uppercase">
+                <strong> DANH SÁCH NHÓM</strong>
+            </div>
+            <div class="col-md-6 text-right ">
+                <a class="btn btn-sm btn-success" href="@Url.Action("Create","AppGroup")"><i class="fas fa-plus"></i>Thêm</a>
+            </div>
+        </div>
+
+    </div>
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+    <div class="card-body container-fluid">
+        <div class="card-header">
+            Search
+            <input type="text" name="txtSearch" placeholder="Search!" class="txtSearch" />
+            <button type="button" class="btn btn-warning" id="search">Search</button>
+        </div>
+        <table class="table table-bordered table-striped table-responsive-xl">
+            <tr>
+                <th>
+                    <input type="checkbox" name="checkALL" />
+                </th>
+                <th>Tên Nhóm</th>
+                <th>Chức năng</th>
+                <th>ID</th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <input type="checkbox" name="checkALL" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Name)
+                    </td>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="@Url.Action("Update","AppGroup",new { id=item.ID})">
+                            <i class="fas fa-edit"></i>
+                        </a>
+                        <a class="btn btn-sm btn-danger" href="@Url.Action("Delete","AppGroup",new { id=item.ID})">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ID)
+                    </td>
+                </tr>
+            }
+        </table>
+        <div class="card-footer">
+            <nav aria-label="Page navigation example">
+                @*<div class="pagination" style="margin-left: 400px">
+                        Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber)
+                        of @Model.PageCount   @Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
+                    </div>*@
+            </nav>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+

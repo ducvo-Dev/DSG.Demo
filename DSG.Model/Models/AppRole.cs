@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -15,12 +16,7 @@ namespace DSG.Model.Models
         {
 
         }
-
-
-        public AppRole(string name, string description) : base(name)
-        {
-            this.Description = description;
-        }
+        [MaxLength(128)]
         public virtual string Description { get; set; }
     }
 }

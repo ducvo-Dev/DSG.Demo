@@ -36,6 +36,17 @@ namespace DSG.Model.Models
             return userIdentity;
         }
 
-        //public virtual IEnumerable<Order> Orders { set; get; }
+        //public class DSGDbContext : IdentityDbContext<AppUser>
+        //{
+        //    public ApplicationDbContext()
+        //        : base("DsgConnection", throwIfV1Schema: false)
+        //    {
+        //    }
+
+        //    public static ApplicationDbContext Create()
+        //    {
+        //        return new ApplicationDbContext();
+        //    }
+        //}
     }
 }

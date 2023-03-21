@@ -18,10 +18,12 @@ namespace DSG.Data
         public DbSet<Product> Products { set; get; }
         public DbSet<ProductCategory> ProductCategories { set; get; }
         public DbSet<Error> Errors { set; get; }
-        public DbSet<Function> Functions { set; get; }
-        public DbSet<Permission> Permissions { set; get; }
-        public DbSet<AppRole> AppRoles { set; get; }
-        public DbSet<IdentityUserRole> UserRoles { set; get; }
+        public DbSet<AppRole> AppRoles { set; get; }    
+
+        public DbSet<ApplicationGroup> ApplicationGroups { set; get; }
+        public DbSet<ApplicationRoleGroup> ApplicationRoleGroups { set; get; }
+        public DbSet<ApplicationUserGroup> ApplicationUserGroups { set; get; }
+
 
         public static DsgDbContext Create()
         {

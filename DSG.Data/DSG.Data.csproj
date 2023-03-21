@@ -64,6 +64,26 @@
     <Compile Include="Migrations\202303131548371_InitialDB.designer.cs">
       <DependentUpon>202303131548371_InitialDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202303180730390_updatedata.cs" />
+    <Compile Include="Migrations\202303180730390_updatedata.designer.cs">
+      <DependentUpon>202303180730390_updatedata.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303181506416_update-data02.cs" />
+    <Compile Include="Migrations\202303181506416_update-data02.designer.cs">
+      <DependentUpon>202303181506416_update-data02.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303201719146_update_data03.cs" />
+    <Compile Include="Migrations\202303201719146_update_data03.designer.cs">
+      <DependentUpon>202303201719146_update_data03.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303201738345_update_data04.cs" />
+    <Compile Include="Migrations\202303201738345_update_data04.designer.cs">
+      <DependentUpon>202303201738345_update_data04.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202303201823194_newUpdate.cs" />
+    <Compile Include="Migrations\202303201823194_newUpdate.designer.cs">
+      <DependentUpon>202303201823194_newUpdate.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Infrastructure\DbFactory.cs" />
@@ -71,6 +91,10 @@
     <Compile Include="Infrastructure\IDbFactory.cs" />
     <Compile Include="Infrastructure\IRepository.cs" />
     <Compile Include="Infrastructure\IUnitOfWork.cs" />
+    <Compile Include="Repositories\ApplicationGroupRepository.cs" />
+    <Compile Include="Repositories\ApplicationRoleGroupRepository.cs" />
+    <Compile Include="Repositories\AppRoleRepository.cs" />
+    <Compile Include="Repositories\ApplicationUserGroupRepository.cs" />
     <Compile Include="Repositories\ErrorRepository.cs" />
     <Compile Include="Repositories\ProductCategoryRepository.cs" />
     <Compile Include="Repositories\ProductRepository.cs" />
@@ -92,6 +116,21 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202303131548371_InitialDB.resx">
       <DependentUpon>202303131548371_InitialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303180730390_updatedata.resx">
+      <DependentUpon>202303180730390_updatedata.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303181506416_update-data02.resx">
+      <DependentUpon>202303181506416_update-data02.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303201719146_update_data03.resx">
+      <DependentUpon>202303201719146_update_data03.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303201738345_update_data04.resx">
+      <DependentUpon>202303201738345_update_data04.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202303201823194_newUpdate.resx">
+      <DependentUpon>202303201823194_newUpdate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

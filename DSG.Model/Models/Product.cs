@@ -43,7 +43,9 @@ namespace DSG.Model.Models
         public string Description { set; get; }
 
         public string Content { set; get; }
+        public bool? HotFlag { set; get; }
 
+        public int? ViewCount { set; get; }
         public string Tags { set; get; }
 
         [ForeignKey("CategoryID")]
